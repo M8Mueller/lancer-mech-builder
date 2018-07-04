@@ -1,0 +1,7 @@
+<h3>Licenses</h3>
+<div class="mb-3">
+  <span *ngFor="let license of licenses; let first = first; let i = index">
+    <button class="btn btn-small btn-outline-dark" *ngIf="first">{{license}}</button>
+    <button class="btn btn-small btn-outline-dark" *ngIf="!first" (click)="spliceLicense(i)">{{license}} <i class="fa fa-times"></i></button>
+  </span>
+</div>

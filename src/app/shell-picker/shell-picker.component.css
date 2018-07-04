@@ -1,0 +1,10 @@
+.card:hover {
+  cursor: pointer;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  background-color: #eee;
+}
+
+.card.active {
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  background-color: #eee;
+}
