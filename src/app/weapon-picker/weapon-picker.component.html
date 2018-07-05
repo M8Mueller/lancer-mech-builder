@@ -1,0 +1,35 @@
+<div class="clearfix">
+  <div class="card float-left mr-4 mb-4" *ngFor="let weap of weapons; let i = index;" style="width: 18rem;" [ngClass]="{'active': i===active}" (click)='activate(i)'>
+    <div class="card-body">
+      <h6>{{weap.corp}}</h6>
+      <h5 class="card-title">{{weap.name}}</h5>
+      <p class="card-text">{{weap.description}}</p>
+      <table class="table">
+        <tr>
+          <th>License</th>
+          <td>{{weap.license}}</td>
+        </tr>
+        <tr>
+          <th>Type</th>
+          <td>{{weap.mount}} {{weap.type}}</td>
+        </tr>
+        <tr>
+          <th>Range</th>
+          <td>{{weap.range}}</td>
+        </tr>
+        <tr>
+          <th>Damage</th>
+          <td><div *ngFor="let dmg of weap.damage">{{dmg}}</div></td>
+        </tr>
+        <tr *ngIf="weap.tags">
+          <th>Tags</th>
+          <td><div *ngFor="let tag of weap.tags">{{tag}}</div></td>
+        </tr>
+        <tr *ngIf="weap.special">
+          <th>Special</th>
+          <td>{{weap.special}}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>

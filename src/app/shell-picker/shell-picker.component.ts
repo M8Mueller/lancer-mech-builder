@@ -11,6 +11,11 @@ export class ShellPickerComponent implements OnInit {
 
   activate(i) {
     this.active = i;
+    var license = this.shells[i].license;
+    if (!this.getLicense(license)) {
+      this.addLicense(license);
+      console.log(this.licenses);
+    }
   }
 
   shells: any[] = [
@@ -30,7 +35,7 @@ export class ShellPickerComponent implements OnInit {
       license: 'Tokugawa I',
       stats: ['+1 ENG', '+1 HEAT CAP'],
       mounts: ['Flex', 'Main', 'Main'],
-      sp: 5
+      sp: 6
     },
     {
       name: 'Vlad',
@@ -39,9 +44,21 @@ export class ShellPickerComponent implements OnInit {
       license: 'Vlad I',
       stats: ['+1 HULL', '-1 ENG'],
       mounts: ['Flex', 'Flex', 'Heavy'],
-      sp: 5
+      sp: 6
     }
   ]
+
+  licenses: any[] = [
+    'GMS', 'Tokugawa I', 'Tokugawa II', 'Dusk Wing I'
+  ]
+
+  addLicense(license) {
+    this.licenses.push(license);
+  }
+
+  getLicense(license) {
+    return this.licenses.indexOf(license) > -1;
+  }
 
   constructor() { }
 

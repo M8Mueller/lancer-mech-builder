@@ -1,25 +1,28 @@
-<div class="card mr-4" *ngFor="let shell of shells; let i = index;" style="width: 18rem; float: left;" [ngClass]="{'active': i===active}" (click)='activate(i)'>
-  <div class="card-body">
-    <h6>{{shell.corp}}</h6>
-    <h5 class="card-title">{{shell.name}}</h5>
-    <p class="card-text">{{shell.description}}</p>
-    <table class="table">
-      <tr>
-        <th>License</th>
-        <td>{{shell.license}}</td>
-      </tr>
-      <tr>
-        <th>Stats</th>
-        <td><div *ngFor="let stat of shell.stats">{{stat}}</div></td>
-      </tr>
-      <tr>
-        <th>Mounts</th>
-        <td><div *ngFor="let mount of shell.mounts">{{mount}}</div></td>
-      </tr>
-      <tr>
-        <th>SP</th>
-        <td>{{shell.sp}}</td>
-      </tr>
-    </table>
+{{ licenses }}
+<div class="clearfix">
+  <div class="card float-left mr-4 mb-4" *ngFor="let shell of shells; let i = index;" style="width: 18rem;" [ngClass]="{'active': i===active, 'disabled': !getLicense(shell.license)}" (click)='activate(i)'>
+    <div class="card-body">
+      <h6>{{shell.corp}}</h6>
+      <h5 class="card-title">{{shell.name}}</h5>
+      <p class="card-text">{{shell.description}}</p>
+      <table class="table">
+        <tr>
+          <th>License</th>
+          <td>{{shell.license}}</td>
+        </tr>
+        <tr>
+          <th>Stats</th>
+          <td><div *ngFor="let stat of shell.stats">{{stat}}</div></td>
+        </tr>
+        <tr>
+          <th>Mounts</th>
+          <td><div *ngFor="let mount of shell.mounts">{{mount}}</div></td>
+        </tr>
+        <tr>
+          <th>SP</th>
+          <td>{{shell.sp}}</td>
+        </tr>
+      </table>
+    </div>
   </div>
 </div>

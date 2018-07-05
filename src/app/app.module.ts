@@ -7,12 +7,14 @@ import { AppComponent } from './app.component';
 import { UiModule } from './ui/ui.module';
 import { ShellPickerComponent } from './shell-picker/shell-picker.component';
 import { LicenseListComponent } from './license-list/license-list.component';
+import { WeaponPickerComponent } from './weapon-picker/weapon-picker.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ShellPickerComponent,
-    LicenseListComponent
+    LicenseListComponent,
+    WeaponPickerComponent
   ],
   imports: [
     BrowserModule,
