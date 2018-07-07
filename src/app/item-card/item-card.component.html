@@ -1,0 +1,13 @@
+<div class="card">
+  <div class="card-header" [ngSwitch]="item.itemType">
+    <h6 *ngSwitchCase="shell"><i class="fa fa-cog"></i> SHELL</h6>
+    <h6 *ngSwitchCase="shellSystem"><i class="fa fa-cogs"></i> SHELL SYSTEM</h6>
+    <h6 *ngSwitchCase="system"><i class="fa fa-usb"></i> SYSTEM</h6>
+    <h6 *ngSwitchDefault><i class="fa fa-toolbox"></i> EQUIPMENT</h6>
+  </div>
+  <div class="card-body">
+    <div class="card-title">
+      <h5>{{ item.name }}</h5>
+    </div>
+  </div>
+</div>

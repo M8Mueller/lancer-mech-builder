@@ -8,13 +8,17 @@ import { UiModule } from './ui/ui.module';
 import { ShellPickerComponent } from './shell-picker/shell-picker.component';
 import { LicenseListComponent } from './license-list/license-list.component';
 import { WeaponPickerComponent } from './weapon-picker/weapon-picker.component';
+import { ItemCardComponent } from './item-card/item-card.component';
+import { MechBuilderComponent } from './mech-builder/mech-builder.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ShellPickerComponent,
     LicenseListComponent,
-    WeaponPickerComponent
+    WeaponPickerComponent,
+    ItemCardComponent,
+    MechBuilderComponent
   ],
   imports: [
     BrowserModule,

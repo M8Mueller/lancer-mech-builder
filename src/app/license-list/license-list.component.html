@@ -1,61 +1,85 @@
-<div class="container">
-  <h3>Licenses</h3>
-  <div class="row">
-    <div class="col-12" *ngFor="let corp of corps;">
-      <h4>{{ corp.name }}</h4>
-      <ul class="list-group">
-        <ng-template ngFor let-license [ngForOf]="corp.licenses">
-          <li class="list-group-item clearfix">
-            <h5 class="float-left">{{ license }}</h5>
-            <div class="float-right">
-              <div class="btn-group btn-group-sm" role="group" aria-label="Rank">
-                <button type="button" class="btn btn-secondary" [ngClass]="{'disabled': !pilotLicenses[license]}" *ngIf="corp.name !== 'GMS'" (click)="removeLicense(license);">
-                  <i class="fa fa-minus-circle"></i>
-                </button>
-                <button type="button" class="btn btn-secondary disabled">{{ pilotLicenses[license] || 0 }}</button>
-                <button type="button" class="btn btn-secondary" [ngClass]="{'disabled': pilotLicenses[license] && pilotLicenses[license] === 3}" *ngIf="corp.name !== 'GMS'" (click)="addLicense(license);">
-                  <i class="fa fa-plus-circle"></i>
-                </button>
-                <button type="button" class="btn btn-secondary disabled" *ngIf="corp.name === 'GMS'">
-                  <i class="fa fa-lock"></i>
-                </button>
-              </div>
-            </div>
-          </li>
-          <li class="list-group-item clearfix" *ngIf="pilotLicenses[license]">
-            <div class="card float-left" *ngFor="let shell of unlocks[license].shells">
-              <div class="card-body">
-                <h6><i class="fa fa-cog"></i> SHELL</h6>
-                <div class="card-title"><h5>{{ shell }}</h5></div>
-              </div>
-            </div>
-            <div class="card float-left" *ngFor="let shellSystem of unlocks[license].shellSystems">
-              <div class="card-body">
-                <h6><i class="fa fa-cogs"></i> SHELL System</h6>
-                <div class="card-title"><h5>{{ shellSystem }}</h5></div>
-              </div>
-            </div>
-            <div class="card float-left" *ngFor="let coreBonus of unlocks[license].coreBonuses">
-              <div class="card-body">
-                <h6><i class="fa fa-lightbulb"></i> CORE Bonus</h6>
-                <div class="card-title"><h5>{{ coreBonus }}</h5></div>
-              </div>
-            </div>
-            <div class="card float-left" *ngFor="let weapon of unlocks[license].weapons">
-              <div class="card-body">
-                <h6><i class="fa fa-crosshairs"></i> Weapon</h6>
-                <div class="card-title"><h5>{{ weapon }}</h5></div>
-              </div>
-            </div>
-            <div class="card float-left" *ngFor="let system of unlocks[license].systems">
-              <div class="card-body">
-                <h6><i class="fa fa-bolt"></i> System</h6>
-                <div class="card-title"><h5>{{ system }}</h5></div>
-              </div>
-            </div>
-          </li>
-        </ng-template>
-      </ul>
+<div class="navbar navbar-dark bg-dark" style="position: fixed; top: 56px; bottom: 56px; left: 0; width: 200px; z-index: 100;">
+  <div class="navbar-nav">
+      <a class="nav-item nav-link" *ngFor="let corp of corps; let i = index;" (click)="setActive(i);" style="cursor: pointer;">{{ corp.name }}</a>
     </div>
+</div>
+<div class="row" style="margin-left: 200px;">
+  <div class="col-12">
+    <h4 class="mb-2">{{ corps[active].name }} Licenses</h4>
+    <ul class="list-group">
+      <ng-template ngFor let-license [ngForOf]="corps[active].licenses">
+        <li class="list-group-item clearfix">
+          <h5 class="float-left">{{ license }}</h5>
+          <div class="float-right">
+            <div class="btn-group btn-group-sm" role="group" aria-label="Rank">
+              <button type="button" class="btn btn-secondary" [ngClass]="{'disabled': !pilotLicenses[license]}">
+                <i class="fa fa-eye-slash"></i>
+              </button>
+              <button type="button" class="btn btn-secondary" [ngClass]="{'disabled': !pilotLicenses[license]}" *ngIf="corps[active].name !== 'GMS'" (click)="removeLicense(license);">
+                <i class="fa fa-minus-circle"></i>
+              </button>
+              <button type="button" class="btn btn-secondary disabled">{{ pilotLicenses[license] || 0 }}</button>
+              <button type="button" class="btn btn-secondary" [ngClass]="{'disabled': pilotLicenses[license] && pilotLicenses[license] === 3}" *ngIf="corps[active].name !== 'GMS'" (click)="addLicense(license);">
+                <i class="fa fa-plus-circle"></i>
+              </button>
+              <button type="button" class="btn btn-secondary disabled" *ngIf="corps[active].name === 'GMS'">
+                <i class="fa fa-lock"></i>
+              </button>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item clearfix" *ngIf="pilotLicenses[license]">
+          <div class="card float-left" *ngFor="let shell of unlocks[license].shells">
+            <div class="card-header">
+              <h6><i class="fa fa-cog"></i> SHELL</h6></div>
+            <div class="card-body">
+              <div class="card-title"><h5>{{ shell }}</h5></div>
+            </div>
+          </div>
+          <div class="card float-left" *ngFor="let shellSystem of unlocks[license].shellSystems">
+            <div class="card-body">
+              <h6><i class="fa fa-cogs"></i> SHELL System</h6>
+              <div class="card-title"><h5>{{ shellSystem }}</h5></div>
+            </div>
+          </div>
+          <div class="card float-left" *ngFor="let weapon of unlocks[license].weapons">
+            <div class="card-body">
+              <h6><i class="fa fa-crosshairs"></i><span *ngIf="!weapons[weapon]"> Weapon</span><span *ngIf="weapons[weapon]"> {{ weapons[weapon].mount }} {{ weapons[weapon].type }}</span></h6>
+              <div class="card-title"><h5>{{ weapon }}</h5></div>
+              <!-- <table class="table" *ngIf="weapons[weapon]">
+                <tr>
+                  <th>Type</th>
+                  <td>{{ weapons[weapon].mount }} {{ weapons[weapon].type }}</td>
+                </tr>
+                <tr>
+                  <th>Range</th>
+                  <td>{{ weapons[weapon].range }}</td>
+                </tr>
+                <tr>
+                  <th>Tags</th>
+                  <td><div *ngFor="let tag of weapons[weapon].tags">{{ tag }}</div></td>
+                </tr>
+                <tr>
+                  <th>Damage</th>
+                  <td>{{ weapons[weapon].damage }}</td>
+                </tr>
+              </table> -->
+            </div>
+          </div>
+          <div class="card float-left" *ngFor="let system of unlocks[license].systems">
+            <div class="card-body">
+              <h6><i class="fa fa-bolt"></i> System</h6>
+              <div class="card-title"><h5>{{ system }}</h5></div>
+            </div>
+          </div>
+          <div class="card float-left" *ngFor="let coreBonus of unlocks[license].coreBonuses">
+            <div class="card-body">
+              <h6><i class="fa fa-lightbulb"></i> CORE Bonus</h6>
+              <div class="card-text"><p>{{ coreBonus }}</p></div>
+            </div>
+          </div>
+        </li>
+      </ng-template>
+    </ul>
   </div>
 </div>

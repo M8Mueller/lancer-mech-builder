@@ -9,7 +9,7 @@ export class LicenseService {
     'GMS': {
       1: { 
         shells: ['Everest'],
-        weapons: ['Type I MC-P', 'Type I MCP-TP', 'Type I MC-BR', 'Type II MC-HB'] 
+        weapons: ['Type I MC-P', 'Type I MC-TP', 'Type I MC-K', 'Type I MC-BR', 'Type II MC-HB'] 
       }
     },
     'Tokugawa': { 
@@ -30,6 +30,7 @@ export class LicenseService {
     }
   };
 
+  // Returns an object with consolidated lists of items unlocked by the given rank
   getUnlocks(license, rank) {
     var unlocks = {
       coreBonuses: [],

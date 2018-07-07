@@ -1,15 +1,8 @@
-.box {
-  text-align: center;
-  width: 8rem;
-  height: 8rem;
+.card {
+  width: 11.5rem;
   margin: .5rem;
-  border: 2px solid #fff;
-  border-radius: 5px;
-  color: #fff;
-  background-color: #343a40;
 }
 
-.card {
-  width: 11.25rem;
-  margin: .5rem;
+.table {
+  margin-bottom: 0;
 }

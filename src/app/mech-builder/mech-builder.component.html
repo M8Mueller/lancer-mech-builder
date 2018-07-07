@@ -1,0 +1,185 @@
+<div class="row">
+  <div class="col-12 mt-3">
+    <div class="d-flex mb-4">
+      <div class="card mr-3" style="width:16rem;">
+        <h4 class="card-header">CORE</h4>
+        <table class="table">
+          <tr>
+            <th>Level</th>
+            <td>
+              <div class="btn-group btn-group-sm" role="group" aria-label="Pilot Level">
+                <button type="button" class="btn btn-secondary" [ngClass]="{'disabled': level === 0 || level === getTotalCore()}" (click)="removeLevel();">
+                  <i class="fa fa-minus-circle"></i>
+                </button>
+                <button type="button" class="btn btn-secondary disabled">{{ level }}</button>
+                <button type="button" class="btn btn-secondary" [ngClass]="" (click)="addLevel();">
+                  <i class="fa fa-plus-circle"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th>Hull</th>
+            <td>
+              <div class="btn-group btn-group-sm" role="group" aria-label="CORE Hull">
+                <button type="button" class="btn btn-secondary" [ngClass]="{'disabled': core.hull === 0}" (click)="removeCore('hull');">
+                  <i class="fa fa-minus-circle"></i>
+                </button>
+                <button type="button" class="btn btn-secondary" [ngClass]="{'disabled': core.hull === 0}" (click)="resetCore('hull')">{{ core.hull }}</button>
+                <button type="button" class="btn btn-secondary" [ngClass]="{'disabled': getTotalCore() === level || core.hull === 6}" (click)="addCore('hull');">
+                  <i class="fa fa-plus-circle"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th>Agility</th>
+            <td>
+              <div class="btn-group btn-group-sm" role="group" aria-label="CORE Agility">
+                <button type="button" class="btn btn-secondary" [ngClass]="{'disabled': core.agility === 0}" (click)="removeCore('agility');">
+                  <i class="fa fa-minus-circle"></i>
+                </button>
+                <button type="button" class="btn btn-secondary disabled">{{ core.agility }}</button>
+                <button type="button" class="btn btn-secondary" [ngClass]="{'disabled': getTotalCore() === level || core.agility === 6}" (click)="addCore('agility');">
+                  <i class="fa fa-plus-circle"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th>Systems</th>
+            <td>
+              <div class="btn-group btn-group-sm" role="group" aria-label="CORE Systems">
+                <button type="button" class="btn btn-secondary" [ngClass]="{'disabled': core.systems === 0}" (click)="removeCore('systems');">
+                  <i class="fa fa-minus-circle"></i>
+                </button>
+                <button type="button" class="btn btn-secondary disabled">{{ core.systems }}</button>
+                <button type="button" class="btn btn-secondary" [ngClass]="{'disabled': this.getTotalCore() === level || core.systems === 6}" (click)="addCore('systems');">
+                  <i class="fa fa-plus-circle"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th>Engineering</th>
+            <td>
+              <div class="btn-group btn-group-sm" role="group" aria-label="CORE Systems">
+                <button type="button" class="btn btn-secondary" [ngClass]="{'disabled': core.engineering === 0}" (click)="removeCore('engineering');">
+                  <i class="fa fa-minus-circle"></i>
+                </button>
+                <button type="button" class="btn btn-secondary disabled">{{ core.engineering }}</button>
+                <button type="button" class="btn btn-secondary" [ngClass]="{'disabled': this.getTotalCore() === level || core.engineering === 6}" (click)="addCore('engineering');">
+                  <i class="fa fa-plus-circle"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+          <tr *ngIf="core.hp">
+            <th>HP</th>
+            <td>{{ core.hp }}</td>
+          </tr>
+          <tr *ngIf="core.targeting">
+            <th>Targeting</th>
+            <td>{{ core.targeting }}</td>
+          </tr>
+          <tr *ngIf="core.sp">
+            <th>SP</th>
+            <td>{{ core.sp }}</td>
+          </tr>
+          <tr *ngIf="core.mounts.length > 0">
+            <th>Mounts</th>
+            <td><div *ngFor="let mount of core.mounts">{{ mount.type }}</div></td>
+          </tr>
+        </table>
+        <div class="card-body">
+          <button class="btn btn-secondary mr-2" *ngFor="let mount of core.mounts; let i = index;" (click)="browseWeapons(mount, i)">
+            {{ mount.type }}
+          </button>
+        </div>
+      </div>
+
+      <div class="card" style="width:16rem;">
+        <button class="btn btn-secondary btn-sm card-header d-flex justify-content-between" (click)="browseShells()"><h4 class="mb-0">SHELL</h4><h5 class="mb-0">{{ shell.name }}</h5></button>
+        <table class="table">
+          <tr>
+            <th>Size</th>
+            <td>{{ shell.size }}</td>
+          </tr>
+          <tr *ngIf="shell.armor">
+            <th>Armor</th>
+            <td>{{ shell.armor }}</td>
+          </tr>
+          <tr *ngIf="shell.hull">
+            <th>Hull</th>
+            <td>
+              {{ shell.hull }}
+            </td>
+          </tr>
+          <tr *ngIf="shell.hp">
+            <th>HP</th>
+            <td>{{ shell.hp }}</td>
+          </tr>
+          <tr *ngIf="shell.critical">
+            <th>Critical Gauge</th>
+            <td>{{ shell.critical }}</td>
+          </tr>
+          <tr *ngIf="shell.agility">
+            <th>Agility</th>
+            <td>
+              {{ shell.agility }}
+            </td>
+          </tr>
+          <tr *ngIf="shell.speed">
+            <th>Speed</th>
+            <td>
+              {{ shell.speed }}
+            </td>
+          </tr>
+          <tr *ngIf="shell.systems">
+            <th>Systems</th>
+            <td>
+              {{ shell.systems }}
+            </td>
+          </tr>
+          <tr *ngIf="shell.engineering">
+            <th>Engineering</th>
+            <td>{{ shell.engineering }}</td>
+          </tr>
+          <tr *ngIf="shell.heatCap">
+            <th>Heat Capacity</th>
+            <td>{{ shell.heatCap }}</td>
+          </tr>
+          <tr *ngIf="shell.targeting">
+            <th>Targeting</th>
+            <td>{{ shell.targeting }}</td>
+          </tr>
+          <tr>
+            <th>SP</th>
+            <td>{{ shell.sp }}</td>
+          </tr>
+          <tr>
+            <th>Mounts</th>
+            <td><div *ngFor="let mount of shell.mounts">{{ mount.type }}</div></td>
+          </tr>
+        </table>
+        <div class="card-body">
+          <button class="btn btn-secondary mr-2" *ngFor="let mount of shell.mounts; let i = index;" (click)="browseWeapons(mount, i)">
+            {{ mount.type }} {{ mount.weapon?.name }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="showShells">
+      <button class="btn btn-secondary mr-2" *ngFor="let shell of availableShells" (click)="setShell(shell);">
+        {{ shell.corp }} {{ shell.name }}
+      </button>
+    </div>
+    <div *ngIf="showWeapons">
+      <button class="btn btn-secondary mr-2" *ngFor="let weapon of availableWeapons" [ngClass]="{'disabled': !canMount(activeMount.type, weapon.mount)}" (click)="setWeapon(weapon, activeMount);">
+        {{ weapon.corp }} {{ weapon.name }} 
+      </button>
+    </div>
+
+  </div>
+</div>

@@ -8,18 +8,27 @@ export class PilotService {
   pilot = {
     licenses: { 
       'GMS': 1,
-      'Tokugawa': 0
+      'Tokugawa': 1
     },
     talents: {},
     core: {
-      hp: 0,
-      hull: 0,
+      hp: 7,
+      hull: 1,
       agility: 0,
       systems: 0,
       engineering: 0,
       sp: 0,
       mounts: []
     }
+  }
+
+  getLevel() {
+    var level = -1;
+
+    for (var license in this.pilot.licenses)
+      level += this.pilot.licenses[license];
+
+    return level;
   }
 
   getLicenses() {
@@ -38,6 +47,10 @@ export class PilotService {
       this.pilot.licenses[license] -= 1;
 
     return this.pilot.licenses[license];
+  }
+
+  getCore() {
+    return this.pilot.core;
   }
 
   constructor() { }
