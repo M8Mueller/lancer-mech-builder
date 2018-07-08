@@ -31,7 +31,7 @@
                   <button type="button" class="btn btn-secondary" [disabled]="core.hull === 0" [ngClass]="{'disabled': core.hull === 0}" (click)="removeCore('hull');">
                     <i class="fa fa-minus-circle"></i>
                   </button>
-                  <button type="button" class="btn btn-secondary" [ngClass]="{'disabled': core.hull === 0}" (click)="resetCore('hull')" placement="bottom" [ngbTooltip]="hullTooltip">{{ core.hull + (shell.hull || 0) }}</button>
+                  <button type="button" class="btn btn-secondary" [ngClass]="{'disabled': core.hull === 0}" (click)="resetCore('hull')" container="body" placement="top" [ngbTooltip]="hullTooltip">{{ core.hull + (shell.hull || 0) }}</button>
                   <button type="button" class="btn btn-secondary" [disabled]="getTotalCore() === level || core.hull === 6" [ngClass]="{'disabled': getTotalCore() === level || core.hull === 6}" (click)="addCore('hull');">
                     <i class="fa fa-plus-circle"></i>
                   </button>
@@ -180,7 +180,7 @@
       <!-- SHELL -->
       <!-- WEAPONS -->
       <div class="mr-3 mb-5">
-        <div class="card card-fixed-xl">
+        <div class="card card-fixed-lg">
           <h4 class="card-header">WEAPONS</h4>
           <div class="card-body">
             <div *ngFor="let mount of shell.mounts; let i = index;">
@@ -216,9 +216,11 @@
                   </tr>
                 </table>
                 <div class="card-body" *ngIf="mount.auxWeapon">
-                  <div class="card-title" *ngIf="mount.auxWeapon">
+                  <div class="d-flex justify-content-between">
+                    <h6 class="card-subtitle mb-2 text-muted">{{ mount.auxWeapon.corp }}</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">ALT</h6>
+                  </div>
                   <h5 class="card-title h5">{{ mount.auxWeapon.name }}</h5>
-                  <h6 class="card-subtitle mb-2 text-muted">{{ mount.auxWeapon.corp }}</h6>
                 </div>
               </div>
             </div>

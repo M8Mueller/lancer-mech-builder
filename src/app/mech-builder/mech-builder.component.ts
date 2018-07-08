@@ -66,49 +66,7 @@ export class MechBuilderComponent implements OnInit {
   ];
 
   showWeapons = false;
-  availableWeapons = [
-    {
-      name: 'Type I MC-P',
-      mount: 'Aux',
-      type: 'CQB',
-      range: 10,
-      damage: '1d3 Kinetic',
-      corp: 'GMS',
-      license: 'GMS',
-      rank: 1
-    }, 
-    {
-      name: 'Type I MC-TP',
-      mount: 'Aux',
-      type: 'CQB',
-      range: 10,
-      damage: '1d3 Energy',
-      corp: 'GMS',
-      license: 'GMS',
-      rank: 1
-    }, 
-    {
-      name: 'Type I MC-BR',
-      mount: 'Main',
-      type: 'Rifle',
-      range: 18,
-      tags: ['AP','Unreliable'],
-      damage: '1d6+1 Kinetic',
-      corp: 'GMS',
-      license: 'GMS',
-      rank: 1
-    }, 
-    {
-      name:'Type II MC-HB',
-      mount: 'Heavy',
-      type: 'Melee',
-      range: 'Reach',
-      damage: '2d6 Kinetic',
-      corp: 'GMS',
-      license: 'GMS',
-      rank: 1
-    }
-  ];
+  availableWeapons = [];
 
   addLevel() {
     this.level++;
@@ -195,7 +153,7 @@ export class MechBuilderComponent implements OnInit {
 
       this[mountLocation].mounts[mount.index][mountType] = weapon;
 
-      if (mount.auxWeapon && (weapon === null || weapon.mount !== 'Aux')) this[mountLocation].mounts[mount.index].auxWeapon = null;
+      if (mount.auxWeapon && (weapon && weapon.mount !== 'Aux')) this[mountLocation].mounts[mount.index].auxWeapon = null;
 
       this.activeMount = null;
       this.showWeapons = false;
@@ -205,10 +163,11 @@ export class MechBuilderComponent implements OnInit {
 
   constructor(pilotService: PilotService, private weaponService: WeaponService) {
     this.pilotService = pilotService;
-    this.level = pilotService.getLevel();
+    this.availableWeapons = this.weaponService.getAvailableWeapons(this.pilotService.getLicenses());
   }
 
   ngOnInit() {
+    this.level = this.pilotService.getLevel();
     this.core = this.pilotService.getCore();
     this.shell = this.availableShells[0];
   }
