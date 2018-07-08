@@ -9,6 +9,9 @@ import { WeaponService } from '../weapon.service';
   styleUrls: ['./mech-builder.component.css']
 })
 export class MechBuilderComponent implements OnInit {
+
+  private pilotService;
+
   level: number;
 
   core: any;
@@ -24,7 +27,7 @@ export class MechBuilderComponent implements OnInit {
       armor: 0,
       corp: 'GMS',
       license: 'GMS',
-      mounts: [{ type: 'Flex', weapon: null }, { type: 'Main', weapon: null }, { type: 'Heavy', weapon: null }],
+      mounts: [{ type: 'Flex', weapon: null, auxWeapon: null }, { type: 'Main', weapon: null }, { type: 'Heavy', weapon: null }],
       sp: 5
     },
     {
@@ -36,7 +39,7 @@ export class MechBuilderComponent implements OnInit {
       rank: 1,
       engineering: 1,
       heatCap: 1,
-      mounts: [{ type: 'Flex', weapon: null }, { type: 'Main', weapon: null }, { type: 'Main', weapon: null }],
+      mounts: [{ type: 'Flex', weapon: null, auxWeapon: null }, { type: 'Main', weapon: null }, { type: 'Main', weapon: null }],
       sp: 6
     },
     {
@@ -48,7 +51,7 @@ export class MechBuilderComponent implements OnInit {
       rank: 1,
       hull: 1,
       engineering: -1,
-      mounts: [{ type: 'Flex', weapon: null }, { type: 'Flex', weapon: null }, { type: 'Heavy', weapon: null }],
+      mounts: [{ type: 'Flex', weapon: null, auxWeapon: null }, { type: 'Flex', weapon: null, auxWeapon: null }, { type: 'Heavy', weapon: null }],
       sp: 6
     }
   ];
@@ -139,7 +142,7 @@ export class MechBuilderComponent implements OnInit {
   resetCore(stat) {
     this.core[stat] = 0;
     if (stat === 'hull')
-      this.core.hp = this.level * 3;
+      this.core.hp = 20 + this.level * 3;
   }
 
   getTotalCore() {
@@ -154,40 +157,55 @@ export class MechBuilderComponent implements OnInit {
 
   setShell(shell) {
     this.shell = shell;
+    this.showShells = false;
   }
 
-  browseWeapons(mount, index) {
+  browseWeapons(mount, index, aux = false) {
     if (this.activeMount && this.activeMount.index !== index) {
       this.showWeapons = true;
     } else {
       this.showWeapons = !this.showWeapons;
     }
 
-    this.activeMount = { type: mount.type, weapon: mount.weapon, index: index };
+    this.activeMount = { type: mount.type, weapon: mount.weapon, auxWeapon: mount.auxWeapon || null, index: index, aux: aux };
     this.showShells = false;
   }
 
-  setWeapon(weapon, activeMount) {
-    if (activeMount.type === 'Core') {
-
+  mountWeapon(weapon, mount) {
+    if (mount.type === 'Core') {
+      if (mount.aux) {
+        this.core.mounts[mount.index].auxWeapon = weapon;
+      } else {
+        this.core.mounts[mount.index].weapon = weapon;
+      }
+    } else if (mount.aux) {
+      this.shell.mounts[mount.index].auxWeapon = weapon;
     } else {
-      this.shell.mounts[activeMount.index].weapon = weapon;
+      this.shell.mounts[mount.index].weapon = weapon;
     }
+
+    if (weapon && mount.auxWeapon && (weapon.mount === 'Main' || weapon.mount === 'Heavy' || weapon.mount === 'Superheavy') {
+      this.shell.mounts[mount.index].auxWeapon = null;
+    }
+
+    this.activeMount = null;
+    this.showWeapons = false;
   }
 
-  canMount(mount, weaponMount) {
-    if (mount === 'Core') return true;
-    if (mount === 'Flex') return (weaponMount === 'Main' || weaponMount === 'Aux');
-    return (mount === weaponMount);
+  canMount(weapon, mount) {
+    if (mount.aux && weapon.mount !== 'Aux') return false;
+    if (mount.type === 'Core') return true;
+    if (mount.type === 'Flex') return (weapon.mount === 'Main' || weapon.mount === 'Aux');
+    return (mount.type === weapon.mount);
   }
 
-  constructor(private pilotService: PilotService, private weaponService: WeaponService) {
-
+  constructor(pilotService: PilotService, private weaponService: WeaponService) {
+    this.pilotService = pilotService;
+    this.level = pilotService.getLevel();
   }
 
   ngOnInit() {
     this.core = this.pilotService.getCore();
-    this.level = this.pilotService.getLevel();
     this.shell = this.availableShells[0];
   }
 

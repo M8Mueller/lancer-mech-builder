@@ -12,7 +12,7 @@ export class PilotService {
     },
     talents: {},
     core: {
-      hp: 7,
+      hp: 27,
       hull: 1,
       agility: 0,
       systems: 0,

@@ -11,6 +11,8 @@ import { WeaponPickerComponent } from './weapon-picker/weapon-picker.component';
 import { ItemCardComponent } from './item-card/item-card.component';
 import { MechBuilderComponent } from './mech-builder/mech-builder.component';
 
+import { PilotService } from './pilot.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +27,7 @@ import { MechBuilderComponent } from './mech-builder/mech-builder.component';
     NgbModule.forRoot(),
     UiModule
   ],
-  providers: [],
+  providers: [PilotService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
