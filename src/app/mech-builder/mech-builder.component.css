@@ -7,10 +7,32 @@
   border-color: #545b62;
 }
 
+
+.card-fixed-xs {
+  width: 10rem;
+}
+
+.card-fixed-sm {
+  width: 12rem;
+}
+
+.card-fixed {
+  width: 14rem;
+}
+
 .card-fixed-lg {
   width: 16rem;
 }
 
-.card-fixed {
-  width: 12rem;
+.card-fixed-xl {
+  width: 18rem;
+}
+
+.item-selector {
+  background-color: #fff; 
+  opacity: 0.5;
+}
+
+.item-selector:hover {
+  opacity: 0.95;
 }

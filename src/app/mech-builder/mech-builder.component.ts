@@ -27,20 +27,29 @@ export class MechBuilderComponent implements OnInit {
       armor: 0,
       corp: 'GMS',
       license: 'GMS',
-      mounts: [{ type: 'Flex', weapon: null, auxWeapon: null }, { type: 'Main', weapon: null }, { type: 'Heavy', weapon: null }],
+      mounts: [{ type: 'Aux', weapon: null, auxWeapon: null }, { type: 'Flex', weapon: null, auxWeapon: null }, { type: 'Heavy', weapon: null }],
       sp: 5
     },
     {
       name: 'Tokugawa',
       size: 1,
       armor: 0,
-      corp: 'Harrison Armory',
+      corp: 'HA',
       license: 'Tokugawa',
       rank: 1,
       engineering: 1,
       heatCap: 1,
       mounts: [{ type: 'Flex', weapon: null, auxWeapon: null }, { type: 'Main', weapon: null }, { type: 'Main', weapon: null }],
-      sp: 6
+      sp: 6,
+      shellSystem: {
+        name: 'Superheated Reactor Feed',
+        passive: 'While your mech is in the Danger Zone (the last 3 ticks of heat) you deal +1d6 energy damage on the first hit with any attack on your turn.',
+        active: {
+          name: 'Radiance',
+          type: 'Protocol',
+          description: 'Choose 1 energy weapon your mech is wielding. If it is a ranged weapon, its range increases by 5, if it is a melee weapon, its reach increases by +1. For the rest of this combat, this weapon also deals +2d6 energy damage and all of its damage becomes AP. However, each time you fire this weapon, you gain +3 heat.'
+        }
+      }
     },
     {
       name: 'Vlad',
@@ -161,35 +170,15 @@ export class MechBuilderComponent implements OnInit {
   }
 
   browseWeapons(mount, index, aux = false) {
-    if (this.activeMount && this.activeMount.index !== index) {
+    if (this.activeMount && this.activeMount.index === index && this.activeMount.aux === aux) {
+      this.showWeapons = false;
+      this.activeMount = null;
+    } else {
+      this.activeMount = { type: mount.type, weapon: mount.weapon, auxWeapon: mount.auxWeapon || null, index: index, aux: aux };
       this.showWeapons = true;
-    } else {
-      this.showWeapons = !this.showWeapons;
+      this.showShells = false;
     }
 
-    this.activeMount = { type: mount.type, weapon: mount.weapon, auxWeapon: mount.auxWeapon || null, index: index, aux: aux };
-    this.showShells = false;
-  }
-
-  mountWeapon(weapon, mount) {
-    if (mount.type === 'Core') {
-      if (mount.aux) {
-        this.core.mounts[mount.index].auxWeapon = weapon;
-      } else {
-        this.core.mounts[mount.index].weapon = weapon;
-      }
-    } else if (mount.aux) {
-      this.shell.mounts[mount.index].auxWeapon = weapon;
-    } else {
-      this.shell.mounts[mount.index].weapon = weapon;
-    }
-
-    if (weapon && mount.auxWeapon && (weapon.mount === 'Main' || weapon.mount === 'Heavy' || weapon.mount === 'Superheavy') {
-      this.shell.mounts[mount.index].auxWeapon = null;
-    }
-
-    this.activeMount = null;
-    this.showWeapons = false;
   }
 
   canMount(weapon, mount) {
@@ -198,6 +187,21 @@ export class MechBuilderComponent implements OnInit {
     if (mount.type === 'Flex') return (weapon.mount === 'Main' || weapon.mount === 'Aux');
     return (mount.type === weapon.mount);
   }
+
+  mountWeapon(weapon, mount) {
+    if (weapon === null || this.canMount(weapon, mount)) { 
+      var mountLocation = mount.type === 'Core' ? 'core' : 'shell';
+      var mountType = mount.aux ? 'auxWeapon' : 'weapon';
+
+      this[mountLocation].mounts[mount.index][mountType] = weapon;
+
+      if (mount.auxWeapon && (weapon === null || weapon.mount !== 'Aux')) this[mountLocation].mounts[mount.index].auxWeapon = null;
+
+      this.activeMount = null;
+      this.showWeapons = false;
+    }
+  }
+
 
   constructor(pilotService: PilotService, private weaponService: WeaponService) {
     this.pilotService = pilotService;
