@@ -1,9 +1,11 @@
 <div class="row">
-  <div class="col-12 mt-3">
-    <div class="d-flex mb-5">
-      <!-- CORE -->
-      <div>
-        <div class="card card-fixed mr-3">
+  <!-- CORE -->
+  <div class="col-xs-12 col-md-5 col-lg-3">
+
+    <div class="row">
+      <div class="col-sm-6 col-md-12">
+
+        <div class="card">
           <h4 class="card-header">CORE</h4>
           <table class="table">
             <tr>
@@ -14,7 +16,7 @@
                     <i class="fa fa-minus-circle"></i>
                   </button>
                   <button type="button" class="btn btn-secondary disabled" [disabled]="true">{{ level }}</button>
-                  <button type="button" class="btn btn-secondary" [ngClass]="" (click)="addLevel();">
+                  <button type="button" class="btn btn-secondary" [disabled]="level === 15" [ngClass]="{'disabled': level === 15}" (click)="addLevel();">
                     <i class="fa fa-plus-circle"></i>
                   </button>
                 </div>
@@ -81,10 +83,6 @@
               </td>
             </tr>
             <tr>
-              <th>HP</th>
-              <td>{{ core.hp }}</td>
-            </tr>
-            <tr>
               <th>Targeting</th>
               <td>{{ core.targeting || 0}}</td>
             </tr>
@@ -92,95 +90,153 @@
               <th>SP</th>
               <td>{{ core.sp || 0}}</td>
             </tr>
-            <tr *ngIf="core.mounts.length > 0">
+            <tr>
               <th>Mounts</th>
               <td><div *ngFor="let mount of core.mounts">{{ mount.type }}</div></td>
             </tr>
           </table>
         </div>
       </div>
-      <!-- CORE -->
-      <!-- SHELL -->
-      <div>
-        <div class="card card-fixed-xl mr-3">
-          <button class="btn btn-secondary btn-sm card-header d-flex justify-content-between" (click)="browseShells()"><h4 class="mb-0">SHELL</h4><h5 class="mb-0 align-self-center">{{ shell.name }}</h5></button>
+
+      <div class="col-sm-6 col-md-12">
+
+        <div class="card">
+          <h4 class="card-header">Derived Stats</h4>
           <table class="table">
             <tr>
-              <th>Size</th>
-              <td>{{ shell.size }}</td>
-            </tr>
-            <tr *ngIf="shell.armor">
-              <th>Armor</th>
-              <td>{{ shell.armor }}</td>
-            </tr>
-            <tr *ngIf="shell.hull">
-              <th>Hull</th>
-              <td>
-                {{ shell.hull }}
-              </td>
-            </tr>
-            <tr *ngIf="shell.hp">
               <th>HP</th>
-              <td>{{ shell.hp }}</td>
+              <td>{{ core.hp }}</td>
             </tr>
-            <tr *ngIf="shell.critical">
-              <th>Critical Gauge</th>
-              <td>{{ shell.critical }}</td>
+            <tr>
+              <th>CRITICAL Gauge</th>
+              <td>{{ 4 + core.hull }}</td>
             </tr>
-            <tr *ngIf="shell.agility">
-              <th>Agility</th>
-              <td>
-                {{ shell.agility }}
-              </td>
-            </tr>
-            <tr *ngIf="shell.speed">
-              <th>Speed</th>
-              <td>
-                {{ shell.speed }}
-              </td>
-            </tr>
-            <tr *ngIf="shell.systems">
-              <th>Systems</th>
-              <td>
-                {{ shell.systems }}
-              </td>
-            </tr>
-            <tr *ngIf="shell.engineering">
-              <th>Engineering</th>
-              <td>{{ shell.engineering }}</td>
-            </tr>
-            <tr *ngIf="shell.heatCap">
+            <tr>
               <th>Heat Capacity</th>
-              <td>{{ shell.heatCap }}</td>
-            </tr>
-            <tr *ngIf="shell.targeting">
-              <th>Targeting</th>
-              <td>{{ shell.targeting }}</td>
+              <td>{{ 6 + core.engineering + (core.heatCap || 0) }}</td>
             </tr>
             <tr>
-              <th>SP</th>
-              <td>{{ shell.sp }}</td>
+              <th>Speed</th>
+              <td>{{ 5 + core.agility }}</td>
             </tr>
             <tr>
-              <th>Mounts</th>
-              <td><div *ngFor="let mount of shell.mounts">{{ mount.type }}</div></td>
+              <th>Evasion</th>
+              <td>{{ 8 + core.agility }}</td>
+            </tr>
+            <tr>
+              <th>E-Defense</th>
+              <td>{{ 8 + core.systems }}</td>
+            </tr>
+            <tr>
+              <th>Sensor Range</th>
+              <td>{{ 8 + core.systems }}</td>
             </tr>
           </table>
-          <div class="card-body text-justify" *ngIf="shell.shellSystem">
-            <h6 class="card-subtitle mb-2 text-muted">SHELL System</h6>
-            <h5 class="card-title">{{ shell.shellSystem.name }}</h5>
-            <h6 class="card-title">Passive</h6>
-            <p class="card-text">{{ shell.shellSystem.passive }}</p>
-            <h6 class="card-title">Active</h6>
-            <h6 class="card-subtitle mb-2 text-muted">{{ shell.shellSystem.active.name }}</h6>
-            <p class="card-text">{{ shell.shellSystem.active.description }}</p>
+        </div>
+
+      </div>
+
+      <div class="col-sm-12">
+
+        <div class="card">
+          <h4 class="card-header">CORE Bonuses</h4>
+          <div class="card-body">
+            Bonuses go here
           </div>
         </div>
+
       </div>
-      <!-- SHELL -->
-      <!-- WEAPONS -->
-      <div class="mr-3 mb-5">
-        <div class="card card-fixed-lg">
+    </div>
+  </div>
+  <!-- CORE -->
+
+  <!-- SHELL -->
+  <div class="col-xs-12 col-md-7 col-lg-5 col-xl-5">
+
+    <div class="card">
+      <button class="btn btn-secondary btn-sm card-header d-flex justify-content-between" (click)="browseShells()"><h4 class="mb-0">SHELL</h4><h5 class="mb-0 align-self-center">{{ shell.name }}</h5></button>
+      <table class="table">
+        <tr>
+          <th>Size</th>
+          <td>{{ shell.size }}</td>
+        </tr>
+        <tr *ngIf="shell.armor">
+          <th>Armor</th>
+          <td>{{ shell.armor }}</td>
+        </tr>
+        <tr *ngIf="shell.hull">
+          <th>Hull</th>
+          <td>
+            {{ shell.hull }}
+          </td>
+        </tr>
+        <tr *ngIf="shell.hp">
+          <th>HP</th>
+          <td>{{ shell.hp }}</td>
+        </tr>
+        <tr *ngIf="shell.critical">
+          <th>Critical Gauge</th>
+          <td>{{ shell.critical }}</td>
+        </tr>
+        <tr *ngIf="shell.agility">
+          <th>Agility</th>
+          <td>
+            {{ shell.agility }}
+          </td>
+        </tr>
+        <tr *ngIf="shell.speed">
+          <th>Speed</th>
+          <td>
+            {{ shell.speed }}
+          </td>
+        </tr>
+        <tr *ngIf="shell.systems">
+          <th>Systems</th>
+          <td>
+            {{ shell.systems }}
+          </td>
+        </tr>
+        <tr *ngIf="shell.engineering">
+          <th>Engineering</th>
+          <td>{{ shell.engineering }}</td>
+        </tr>
+        <tr *ngIf="shell.heatCap">
+          <th>Heat Capacity</th>
+          <td>{{ shell.heatCap }}</td>
+        </tr>
+        <tr *ngIf="shell.targeting">
+          <th>Targeting</th>
+          <td>{{ shell.targeting }}</td>
+        </tr>
+        <tr>
+          <th>SP</th>
+          <td>{{ shell.sp }}</td>
+        </tr>
+        <tr>
+          <th>Mounts</th>
+          <td><div *ngFor="let mount of shell.mounts">{{ mount.type }}</div></td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="card" *ngIf="shell.shellSystem">
+      <h4 class="card-header">SHELL System</h4>
+      <div class="card-body text-justify">
+        <h5 class="card-title">{{ shell.shellSystem.name }}</h5>
+        <h6 class="card-subtitle text-muted mb-2">Passive</h6>
+        <p class="card-text">{{ shell.shellSystem.passive }}</p>
+        <h5 class="card-title">{{ shell.shellSystem.active.name }}</h5>
+        <h6 class="card-subtitle text-muted mb-2">Active</h6>
+        <p class="card-text">{{ shell.shellSystem.active.description }}</p>
+      </div>
+    </div>
+  </div>
+  <!-- SHELL -->
+
+  <!-- WEAPONS/SYSTEMS -->
+  <div class="col-xs-12 col-lg-4 col-xl-4">
+
+        <div class="card">
           <h4 class="card-header">WEAPONS</h4>
           <div class="card-body">
             <div *ngFor="let mount of shell.mounts; let i = index;">
@@ -194,7 +250,10 @@
                   </button>
                 </div>
                 <div class="card-body" *ngIf="mount.weapon">
-                  <h6 class="card-subtitle mb-2 text-muted">{{ mount.weapon.corp }}</h6>
+                  <div class="d-flex justify-content-between">
+                    <h6 class="card-subtitle mb-2 text-muted">{{ mount.weapon.corp }}</h6>
+                    <h6 class="card-subtitle mb-2 text-muted" (click)="mountWeapon(null, { type: mount.type, index: i })"><i class="fa fa-times pointer"></i></h6>
+                  </div>
                   <h5 class="card-title h5">{{ mount.weapon.name }}</h5>
                 </div>
                 <table class="table" *ngIf="mount.weapon">
@@ -218,7 +277,7 @@
                 <div class="card-body" *ngIf="mount.auxWeapon">
                   <div class="d-flex justify-content-between">
                     <h6 class="card-subtitle mb-2 text-muted">{{ mount.auxWeapon.corp }}</h6>
-                    <h6 class="card-subtitle mb-2 text-muted">ALT</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">ALT <span (click)="mountWeapon(null, { type: 'Aux', index: i, aux: true })"><i class="fa fa-times pointer"></i></span></h6>
                   </div>
                   <h5 class="card-title h5">{{ mount.auxWeapon.name }}</h5>
                 </div>
@@ -226,31 +285,16 @@
             </div>
           </div>
         </div>
-      </div>
-      <!-- WEAPONS -->
 
-      <!-- <div class="d-flex flex-column">
-        <div class="d-flex justify-content-between">
-          <h4 class="h4">Systems</h4><h5 class="h5">SP: {{ shell.sp + core.sp }}</h5>
-        </div>
-        <div class="card mb-3" style="width: 12rem;" *ngFor="let mount of shell.mounts; let i = index;">
-          <h5 class="card-header">{{ mount.type }}</h5>
-          <div class="card-body d-flex justify-content-between">
-            <button class="btn btn-secondary" (click)="browseWeapons(mount, i)" style="width: 4rem; height: 4rem;">Equip</button>
-            <button class="btn btn-secondary" [ngClass]="{'disabled': mount.weapon?.mount !== 'Aux'}" *ngIf="mount.type === 'Flex' || mount.type === 'Aux'" (click)="browseWeapons(mount, i)" style="width: 4rem; height: 4rem;">Equip</button>
+        <div class="card">
+          <div class="card-header d-flex justify-content-between"><h4>SYSTEMS</h4><h5 class="text-muted">{{ shell.sp + core.sp }} SP</h5></div>
+          <div class="card-body">
+            <button class="btn btn-secondary btn-lg">New System</button>
           </div>
         </div>
 
-        <div class="card mb-3" style="width: 12rem;" *ngFor="let mount of core.mounts; let i = index;">
-          <h5 class="card-header">{{ mount.type }}</h5>
-          <div class="card-body d-flex justify-content-between">
-            <button class="btn btn-secondary" (click)="browseWeapons(mount, i)" style="width: 4rem; height: 4rem;">Equip</button>
-            <button class="btn btn-secondary" (click)="browseWeapons(mount, i)" style="width: 4rem; height: 4rem;">Equip</button>
-          </div>
-        </div>
-      </div> -->
-    </div>
   </div>
+  <!-- WEAPONS/SYSTEMS -->
 </div>
 
 <div class="fixed-bottom border-top p-3 item-selector">
@@ -262,7 +306,7 @@
 
   <div class="mb-5" *ngIf="showWeapons" style="width: 33rem;">
     <button class="btn btn-secondary mr-2 mb-2" (click)="mountWeapon(null, activeMount);">
-      Empty
+      <i class="fa fa-times"></i>
     </button>
     <button class="btn btn-secondary mr-2 mb-2" *ngFor="let weapon of availableWeapons" [ngClass]="{'disabled': !canMount(weapon, activeMount)}" (click)="mountWeapon(weapon, activeMount);">
       {{ weapon.corp }} {{ weapon.name }} 
