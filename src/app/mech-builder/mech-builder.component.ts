@@ -160,6 +160,16 @@ export class MechBuilderComponent implements OnInit {
     }
   }
 
+  // Utilities
+
+  getTotal(stat) {
+    return (core[stat] || 0) + (core.bonus[stat] || 0) + (shell[stat] || 0)
+  }
+
+  ceil(number) {
+    return Math.ceil(number);
+  }
+
 
   constructor(pilotService: PilotService, private weaponService: WeaponService) {
     this.pilotService = pilotService;

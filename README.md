@@ -12,7 +12,12 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 ## Build
 
+
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+
+## Deploy
+
+This app is deployed to github-pages courtesy of [angular-cli-ghpages](https://github.com/angular-schule/angular-cli-ghpages/). To deploy, run `ng build --prod --base-href=/lancer-mech-builder/` followed by `ngh --dir dist/lancer-mech-builder`
 
 ## Running unit tests
 

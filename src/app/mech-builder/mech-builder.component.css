@@ -32,10 +32,10 @@
 }
 
 .item-selector {
-  background-color: #fff; 
+  /*background-color: #fff; */
   opacity: 0.5;
 }
 
 .item-selector:hover {
-  opacity: 0.95;
+  opacity: 1;
 }

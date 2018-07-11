@@ -18,7 +18,8 @@ export class PilotService {
       systems: 0,
       engineering: 0,
       sp: 0,
-      mounts: []
+      mounts: [],
+      bonus: {}
     }
   }
 
