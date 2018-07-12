@@ -163,7 +163,7 @@ export class MechBuilderComponent implements OnInit {
   // Utilities
 
   getTotal(stat) {
-    return (core[stat] || 0) + (core.bonus[stat] || 0) + (shell[stat] || 0)
+    return (this.core[stat] || 0) + (this.core.bonus[stat] || 0) + (this.shell[stat] || 0)
   }
 
   ceil(number) {
